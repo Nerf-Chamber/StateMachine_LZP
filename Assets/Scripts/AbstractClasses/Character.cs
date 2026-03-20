@@ -18,9 +18,9 @@ public abstract class Character : MonoBehaviour, IHurtable
         _hurt = GetComponent<HurtBehaviour>();
     }
 
-    public void Hurt(int damage)
+    public virtual void Hurt(int damage)
     {
         healthPoints -= damage;
-        _hurt.Hurt();
+        _hurt.Hurt(ref healthPoints, damage);
     }
 }
