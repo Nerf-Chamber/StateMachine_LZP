@@ -3,10 +3,13 @@ using UnityEngine.InputSystem;
 
 public class Player : Character, InputSystem_Actions.IPlayerActions
 {
+    [SerializeField] private int playerDamage;
+
     private InputSystem_Actions inputActions;
 
     private Vector3 moveDirection = Vector3.zero;
     private Vector3 rotationDirection = Vector3.zero;
+    private bool attackMode = false;
 
     protected override void Awake()
     {
@@ -34,6 +37,17 @@ public class Player : Character, InputSystem_Actions.IPlayerActions
     }
     public void OnAttack(InputAction.CallbackContext context)
     {
-        // TODO
+        if (context.performed) attackMode = true;
+        else if (context.canceled) attackMode = false;
+    }
+
+    public void OnCollisionEnter(Collision collision)
+    {
+        if (collision.collider.name == nameof(Enemy) && attackMode)
+        {
+            // Insta kill is the way >:)
+            if (collision.collider.TryGetComponent(out IHurtable hurtable))
+                hurtable.Hurt(playerDamage);
+        }
     }
 }

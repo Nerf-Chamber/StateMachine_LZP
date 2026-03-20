@@ -13,6 +13,7 @@ public class HurtBehaviour : MonoBehaviour
     {
         if (canTakeDamage)
         {
+            // Amb enemy, com té NavMeshAgent, no fa el knockback però sí que treu vida :)
             _rb.AddForce(Vector3.up * forcePower);
             health -= damage;
             canTakeDamage = false;
