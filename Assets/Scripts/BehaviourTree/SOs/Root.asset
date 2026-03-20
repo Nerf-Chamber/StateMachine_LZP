@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Root
   m_EditorClassIdentifier: Assembly-CSharp::NodeSO
   children:
+  - {fileID: 11400000, guid: e0a80236f828fdb4f8b1c7a18799df91, type: 2}
   - {fileID: 11400000, guid: c12c63af262d5ef4cb54461aeae25a9d, type: 2}
   - {fileID: 11400000, guid: 4a40c2a310dad754f9aa383318a92aa7, type: 2}
   - {fileID: 11400000, guid: 82aeef7bf348bd543b9a9beba6bd8d62, type: 2}
-  - {fileID: 11400000, guid: e0a80236f828fdb4f8b1c7a18799df91, type: 2}

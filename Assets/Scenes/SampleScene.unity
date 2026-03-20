@@ -243,7 +243,7 @@ GameObject:
   - component: {fileID: 280455921}
   - component: {fileID: 280455920}
   - component: {fileID: 280455919}
-  m_Layer: 3
+  m_Layer: 7
   m_Name: Obstacle_2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -730,7 +730,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 541904218}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Obstacles
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -945,7 +945,7 @@ GameObject:
   - component: {fileID: 872118273}
   - component: {fileID: 872118272}
   - component: {fileID: 872118271}
-  m_Layer: 3
+  m_Layer: 7
   m_Name: Obstacle_1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1057,7 +1057,7 @@ GameObject:
   - component: {fileID: 872203278}
   - component: {fileID: 872203277}
   - component: {fileID: 872203276}
-  m_Layer: 3
+  m_Layer: 7
   m_Name: Obstacle_3
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1263,7 +1263,7 @@ PrefabInstance:
       addedObject: {fileID: 1394631890}
     - targetCorrespondingSourceObject: {fileID: 8164078558771037576, guid: 0e8a945e7a4417b49872ae55e57d7bd4, type: 3}
       insertIndex: -1
-      addedObject: {fileID: 1394631888}
+      addedObject: {fileID: 1394631893}
   m_SourcePrefab: {fileID: 100100000, guid: 0e8a945e7a4417b49872ae55e57d7bd4, type: 3}
 --- !u!1 &1066984658
 GameObject:
@@ -1588,6 +1588,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Player
       objectReference: {fileID: 0}
+    - target: {fileID: 8164078558771037576, guid: 4eac576a00b35174ba1d86c283d61170, type: 3}
+      propertyPath: m_Layer
+      value: 6
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -1673,7 +1677,7 @@ NavMeshAgent:
   m_GameObject: {fileID: 1394631868}
   m_Enabled: 1
   m_AgentTypeID: 0
-  m_Radius: 1.5835938
+  m_Radius: 1
   m_Speed: 1.1
   m_Acceleration: 8
   avoidancePriority: 50
@@ -1698,7 +1702,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6291428741f2c1d4cbc23cd903c832b6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::HurtBehaviour
-  forcePower: 20000
+  forcePower: 0
   timeBetweenDamage: 2
 --- !u!114 &1394631880
 MonoBehaviour:
@@ -1741,11 +1745,11 @@ MonoBehaviour:
   _move: {fileID: 0}
   _rotation: {fileID: 0}
   _hurt: {fileID: 0}
-  healthPoints: 10
-  followArea: {fileID: 1394631888}
+  healthPoints: 1
+  _vision: {fileID: 0}
   root: {fileID: 11400000, guid: 1a3692fa1a92a3747a63ef56a1d169f3, type: 2}
   currentState: {fileID: 11400000, guid: c12c63af262d5ef4cb54461aeae25a9d, type: 2}
-  attackDistanceModifier: 40
+  attackDistance: 0.3
   player: {fileID: 1497316895}
   pathBehaviour: {fileID: 1394631890}
   playerTransform: {fileID: 1497316902}
@@ -1755,27 +1759,6 @@ MonoBehaviour:
   attack: {fileID: 0}
   dead: {fileID: 0}
   enemyDamage: 1
---- !u!135 &1394631888
-SphereCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1394631868}
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 1
-  m_ProvidesContacts: 0
-  m_Enabled: 1
-  serializedVersion: 3
-  m_Radius: 15
-  m_Center: {x: 0, y: 0, z: 0}
 --- !u!114 &1394631890
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1793,6 +1776,30 @@ MonoBehaviour:
   - {fileID: 1066984659}
   - {fileID: 1445042840}
   - {fileID: 1566101819}
+--- !u!114 &1394631893
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1394631868}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 50511d2f739dabd4cb462685e23608a1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::VisionDetectionBehaviour
+  target: {fileID: 1497316887}
+  targetMask:
+    serializedVersion: 2
+    m_Bits: 64
+  obstructionMask:
+    serializedVersion: 2
+    m_Bits: 128
+  radius: 2.5
+  memoryTime: 2
+  angle: 130
+  canSeePlayer: 0
+  hasDetectedPlayer: 0
 --- !u!1 &1445042839
 GameObject:
   m_ObjectHideFlags: 0
@@ -1919,6 +1926,7 @@ MonoBehaviour:
   _rotation: {fileID: 0}
   _hurt: {fileID: 0}
   healthPoints: 9999
+  playerDamage: 5
 --- !u!114 &1497316899
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1931,7 +1939,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6291428741f2c1d4cbc23cd903c832b6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::HurtBehaviour
-  forcePower: 20000
+  forcePower: 10000
   timeBetweenDamage: 2
 --- !u!4 &1497316902 stripped
 Transform:
@@ -2040,7 +2048,7 @@ MonoBehaviour:
   m_Center: {x: 0, y: 2, z: 0}
   m_LayerMask:
     serializedVersion: 2
-    m_Bits: 8
+    m_Bits: 136
   m_UseGeometry: 0
   m_DefaultArea: 0
   m_GenerateLinks: 0
@@ -2111,5 +2119,5 @@ SceneRoots:
   - {fileID: 1210089580}
   - {fileID: 908651715}
   - {fileID: 1934699681}
-  - {fileID: 1884933135}
   - {fileID: 1833839141}
+  - {fileID: 1884933135}

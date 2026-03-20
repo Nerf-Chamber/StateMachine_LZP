@@ -1,17 +1,14 @@
-using System.Collections;
-using System.Diagnostics;
 using UnityEngine;
 using UnityEngine.AI;
 
 [RequireComponent(typeof(NavMeshAgent))]
+[RequireComponent(typeof(VisionDetectionBehaviour))]
 public class Enemy : Character
 {
-    [SerializeField] private SphereCollider followArea;
+    [SerializeField] private VisionDetectionBehaviour _vision;
     [SerializeField] private NodeSO root;
     [SerializeField] private NodeSO currentState;
-    [SerializeField] private float attackDistanceModifier;
-
-    private float attackDistance;
+    [SerializeField] private float attackDistance;
 
     public Player player;
     public PathBehaviour pathBehaviour;
@@ -26,8 +23,9 @@ public class Enemy : Character
     protected override void Awake()
     {
         base.Awake();
+        _vision = GetComponent<VisionDetectionBehaviour>();
         agent = GetComponent<NavMeshAgent>();
-        attackDistance = followArea.radius / attackDistanceModifier;
+        // attackDistance = followArea.radius / attackDistanceModifier;
 
         patrol = new Condition(nameof(patrol));
         follow = new Condition(nameof(follow));
@@ -38,35 +36,23 @@ public class Enemy : Character
     }
     private void Update()
     {
+        follow.check = _vision.hasDetectedPlayer;
+        if (follow.check)
+        {
+            float dist = Vector3.Distance(transform.position, playerTransform.position);
+            attack.check = dist <= attackDistance;
+        }
+        else
+            attack.check = false;
+
         currentState.OnUpdate(this);
         ChangeState();
     }
 
-    // HANDLE STATE CHECKS
     public override void Hurt(int damage)
     {
         base.Hurt(damage);
         if (healthPoints <= 0) dead.check = true;
-    }
-    private void OnTriggerEnter(Collider collider)
-    {
-        if (collider.name == nameof(Player))
-        {
-            follow.check = true;
-        }
-    }
-    private void OnTriggerExit(Collider collider)
-    {
-        if (collider.name == nameof(Player))
-        {
-            follow.check = false;
-            attack.check = false;
-        }
-    }
-    private void OnTriggerStay(Collider collider) 
-    {
-        if (collider.name == nameof(Player))
-            attack.check = (playerTransform.position - transform.position).magnitude <= attackDistance;
     }
 
     private void ChangeState()
@@ -82,7 +68,6 @@ public class Enemy : Character
                 }
                 if (node != currentState) node.OnStart(this);
                 currentState = node;
-                //node.OnStart(this);
                 break;
             }
 
